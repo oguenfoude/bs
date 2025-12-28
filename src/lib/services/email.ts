@@ -182,13 +182,23 @@ function formatOrderEmailHTML(orderData: OrderInput): string {
         <td>موديل الساعة</td>
         <td>موديل ${orderData.watchModelId}</td>
       </tr>
+      ${orderData.modelNumber ? `
+      <tr>
+        <td>رقم النموذج المدخل</td>
+        <td>${orderData.modelNumber}</td>
+      </tr>
+      ` : ''}
+      <tr>
+        <td>الكمية</td>
+        <td>${orderData.quantity || 1}</td>
+      </tr>
       <tr>
         <td>طريقة التوصيل</td>
         <td>${deliveryText}</td>
       </tr>
       <tr>
         <td>سعر المنتج</td>
-        <td>${basePrice.toLocaleString('ar-DZ')} دج</td>
+        <td>${basePrice.toLocaleString('ar-DZ')} دج × ${orderData.quantity || 1}</td>
       </tr>
       <tr>
         <td>تكلفة التوصيل</td>

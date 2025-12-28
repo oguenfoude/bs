@@ -22,6 +22,8 @@ const HEADER_ROW = [
   'Wilaya',
   'Baladiya',
   'Watch Model',
+  'Model Number',
+  'Quantity',
   'Delivery Type',
   'Total Price',
   'Status',
@@ -112,7 +114,7 @@ async function createHeadersIfNeeded(sheets: sheets_v4.Sheets, sheetId: string, 
     }
 
     // Sheet is empty, create headers
-    const range = `${sheetName}!A1:K1`;
+    const range = `${sheetName}!A1:M1`;
     
     await sheets.spreadsheets.values.update({
       spreadsheetId: sheetId,
@@ -152,9 +154,11 @@ function formatOrderRow(orderData: OrderInput): (string | number)[] {
     orderData.wilayaNameAr,            // Column F: Wilaya
     orderData.baladiyaNameAr,          // Column G: Baladiya
     `موديل ${orderData.watchModelId}`, // Column H: Watch Model
-    deliveryText,                      // Column I: Delivery Type
-    orderData.totalPrice,              // Column J: Total Price
-    'New',                             // Column K: Status
+    orderData.modelNumber || '',        // Column I: Model Number (user input)
+    orderData.quantity || 1,           // Column J: Quantity
+    deliveryText,                      // Column K: Delivery Type
+    orderData.totalPrice,              // Column L: Total Price
+    'New',                             // Column M: Status
   ];
 }
 

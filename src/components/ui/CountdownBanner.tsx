@@ -47,10 +47,10 @@ export default function CountdownBanner() {
   // Don't render until mounted (prevents hydration mismatch)
   if (!mounted) {
     return (
-      <div className="sticky top-0 z-50 bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-lg">
-        <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-center gap-4">
+      <div className="p-4 bg-gradient-to-r from-rose-50 to-red-50 rounded-xl border-2 border-rose-200">
+        <div className="flex items-center justify-center gap-2 text-rose-700">
           <Timer className="w-5 h-5 animate-pulse" />
-          <span className="font-bold text-sm md:text-base">
+          <span className="font-bold text-base">
             العرض ينتهي خلال: 00:00:00
           </span>
         </div>
@@ -65,10 +65,10 @@ export default function CountdownBanner() {
   const formatTime = (num: number) => num.toString().padStart(2, "0");
 
   return (
-    <div className="sticky top-0 z-50 bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-lg">
-      <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-center gap-4">
+    <div className="p-4 bg-gradient-to-r from-rose-50 to-red-50 rounded-xl border-2 border-rose-200">
+      <div className="flex items-center justify-center gap-2 text-rose-700">
         <Timer className="w-5 h-5 animate-pulse" />
-        <span className="font-bold text-sm md:text-base">
+        <span className="font-bold text-base">
           العرض ينتهي خلال: {formatTime(hours)}:{formatTime(minutes)}:{formatTime(seconds)}
         </span>
       </div>
