@@ -72,7 +72,7 @@ export const OrderSchema = z.object({
   
   deliveryOption: z
     .enum(['home', 'office'], {
-      errorMap: () => ({ message: 'يجب اختيار طريقة التوصيل' }),
+      message: 'يجب اختيار طريقة التوصيل',
     }),
   
   totalPrice: z

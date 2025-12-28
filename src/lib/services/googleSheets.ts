@@ -8,7 +8,7 @@
  * - BASE_URL: Base URL for images (optional, uses Vercel URL if available)
  */
 
-import { google } from 'googleapis';
+import { google, type sheets_v4 } from 'googleapis';
 import type { OrderInput } from '../types';
 import { withRetry } from '../utils';
 import { getWatchImageUrl } from '../utils/url';
@@ -53,7 +53,7 @@ function getGoogleAuth() {
 /**
  * Gets Google Sheets API client.
  */
-async function getSheetsClient() {
+async function getSheetsClient(): Promise<sheets_v4.Sheets> {
   const auth = getGoogleAuth();
   return google.sheets({ version: 'v4', auth });
 }
@@ -61,7 +61,7 @@ async function getSheetsClient() {
 /**
  * Gets the first sheet name from the spreadsheet.
  */
-async function getFirstSheetName(sheets: any, sheetId: string): Promise<string> {
+async function getFirstSheetName(sheets: sheets_v4.Sheets, sheetId: string): Promise<string> {
   try {
     const spreadsheet = await sheets.spreadsheets.get({
       spreadsheetId: sheetId,
@@ -83,7 +83,7 @@ async function getFirstSheetName(sheets: any, sheetId: string): Promise<string> 
 /**
  * Checks if sheet has data (any rows).
  */
-async function hasData(sheets: any, sheetId: string, sheetName: string): Promise<boolean> {
+async function hasData(sheets: sheets_v4.Sheets, sheetId: string, sheetName: string): Promise<boolean> {
   try {
     const range = `${sheetName}!A1:Z1`;
     const response = await sheets.spreadsheets.values.get({
@@ -101,7 +101,7 @@ async function hasData(sheets: any, sheetId: string, sheetName: string): Promise
 /**
  * Creates header row in sheet if it doesn't exist.
  */
-async function createHeadersIfNeeded(sheets: any, sheetId: string, sheetName: string): Promise<void> {
+async function createHeadersIfNeeded(sheets: sheets_v4.Sheets, sheetId: string, sheetName: string): Promise<void> {
   try {
     // Check if sheet has any data
     const hasExistingData = await hasData(sheets, sheetId, sheetName);
