@@ -2,7 +2,7 @@
 
 /**
  * BS MONTERS - Single Page Product Layout
- * 
+ *
  * Features:
  * - Single-page layout matching kingdomofluxury.shop design
  * - Image gallery with model navigation (Previous/Next arrows)
@@ -55,11 +55,16 @@ export default function Page() {
     baladiya: "",
     modelNumber: "1", // Default to model 1
   });
-  const [deliveryOption, setDeliveryOption] = useState<DeliveryOption | null>(null);
+  const [deliveryOption, setDeliveryOption] = useState<DeliveryOption | null>(
+    null,
+  );
   const [quantity, setQuantity] = useState<number>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null);
+  const [modalImage, setModalImage] = useState<{
+    src: string;
+    alt: string;
+  } | null>(null);
   const [viewerCount, setViewerCount] = useState<number>(8); // Fake viewer count
   const [stockCount] = useState<number>(6); // Fake stock count
 
@@ -107,11 +112,10 @@ export default function Page() {
 
   const handleOpenModal = () => {
     setModalImage({
-      src: `/images/watches/${selectedWatchId}.jpg`,
+      src: `/images/watches/${selectedWatchId}.webp`,
       alt: `موديل ${selectedWatchId}`,
     });
   };
-
 
   // Validation
   const isFormValid = useMemo(() => {
@@ -121,7 +125,14 @@ export default function Page() {
     const wilayaValid = formData.wilayaNameAr.trim().length >= 2;
     const baladiyaValid = formData.baladiya.trim().length >= 2;
     const modelNumberValid = formData.modelNumber.trim().length >= 1;
-    return nameValid && phoneValid && wilayaValid && baladiyaValid && modelNumberValid && deliveryOption !== null;
+    return (
+      nameValid &&
+      phoneValid &&
+      wilayaValid &&
+      baladiyaValid &&
+      modelNumberValid &&
+      deliveryOption !== null
+    );
   }, [formData, deliveryOption]);
 
   // Submit handler
@@ -135,10 +146,14 @@ export default function Page() {
 
     const phoneClean = formData.phone.replace(/\s/g, "").replace(/^\+213/, "0");
     if (!phoneClean || !/^(05|06|07)\d{8}$/.test(phoneClean)) {
-      newErrors.phone = "رقم الهاتف غير صالح. يجب أن يبدأ بـ 05 أو 06 أو 07 ويحتوي على 10 أرقام";
+      newErrors.phone =
+        "رقم الهاتف غير صالح. يجب أن يبدأ بـ 05 أو 06 أو 07 ويحتوي على 10 أرقام";
     }
 
-    if (!formData.wilayaNameAr.trim() || formData.wilayaNameAr.trim().length < 2) {
+    if (
+      !formData.wilayaNameAr.trim() ||
+      formData.wilayaNameAr.trim().length < 2
+    ) {
       newErrors.wilayaNameAr = "اسم الولاية مطلوب (حرفان على الأقل)";
     }
 
@@ -146,8 +161,12 @@ export default function Page() {
       newErrors.baladiya = "اسم البلدية مطلوب (حرفان على الأقل)";
     }
 
-    if (!formData.modelNumber.trim() || formData.modelNumber.trim().length < 1) {
-      newErrors.modelNumber = "رقم النموذج مطلوب. يرجى إدخال رقم النموذج الموضح في الصورة";
+    if (
+      !formData.modelNumber.trim() ||
+      formData.modelNumber.trim().length < 1
+    ) {
+      newErrors.modelNumber =
+        "رقم النموذج مطلوب. يرجى إدخال رقم النموذج الموضح في الصورة";
     }
 
     if (!deliveryOption) {
@@ -162,7 +181,9 @@ export default function Page() {
     }
 
     setIsSubmitting(true);
-    const loadingToast = toast.loading("جارٍ معالجة طلبك...", { position: "top-center" });
+    const loadingToast = toast.loading("جارٍ معالجة طلبك...", {
+      position: "top-center",
+    });
 
     try {
       const orderData = {
@@ -246,7 +267,9 @@ export default function Page() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-slate-900">BS MONTERS</h1>
-              <p className="text-xs text-slate-600">متجر الهدايا و الساعات الفاخرة</p>
+              <p className="text-xs text-slate-600">
+                متجر الهدايا و الساعات الفاخرة
+              </p>
             </div>
           </div>
         </div>
@@ -261,7 +284,7 @@ export default function Page() {
               {/* Main Image */}
               <div className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 shadow-2xl border-4 border-slate-200">
                 <Image
-                  src={`/images/watches/${selectedWatchId}.jpg`}
+                  src={`/images/watches/${selectedWatchId}.webp`}
                   alt={`موديل ${selectedWatchId}`}
                   fill
                   className="object-cover transition-all duration-500"
@@ -272,7 +295,9 @@ export default function Page() {
 
                 {/* Model Number Badge */}
                 <div className="absolute top-4 right-4 bg-black/80 text-white px-4 py-2 rounded-lg backdrop-blur-sm">
-                  <span className="text-sm font-bold">موديل {selectedWatchId}</span>
+                  <span className="text-sm font-bold">
+                    موديل {selectedWatchId}
+                  </span>
                 </div>
 
                 {/* Zoom Button */}
@@ -308,7 +333,10 @@ export default function Page() {
                     key={watchId}
                     onClick={() => {
                       setSelectedWatchId(watchId);
-                      setFormData((f) => ({ ...f, modelNumber: watchId.toString() }));
+                      setFormData((f) => ({
+                        ...f,
+                        modelNumber: watchId.toString(),
+                      }));
                     }}
                     className={`relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-200 border-2 ${
                       selectedWatchId === watchId
@@ -317,7 +345,7 @@ export default function Page() {
                     }`}
                   >
                     <Image
-                      src={`/images/watches/${watchId}.jpg`}
+                      src={`/images/watches/${watchId}.webp`}
                       alt={`موديل ${watchId}`}
                       fill
                       className="object-cover"
@@ -351,7 +379,11 @@ export default function Page() {
                   سارع! فقط {stockCount} قطعة متبقية في المخزن!
                 </p>
                 <p className="text-sm text-slate-600">
-                  يشاهده <span className="font-bold text-amber-600">{viewerCount}</span> متصفح في الوقت الحالي.
+                  يشاهده{" "}
+                  <span className="font-bold text-amber-600">
+                    {viewerCount}
+                  </span>{" "}
+                  متصفح في الوقت الحالي.
                 </p>
               </div>
 
@@ -370,7 +402,9 @@ export default function Page() {
 
               {/* Customer Info Form - FIRST */}
               <div className="border-t border-slate-200 pt-6">
-                <h2 className="text-xl font-bold mb-4 text-slate-900">معلومات الزبون</h2>
+                <h2 className="text-xl font-bold mb-4 text-slate-900">
+                  معلومات الزبون
+                </h2>
                 <div className="space-y-4">
                   {/* Full Name */}
                   <div>
@@ -381,8 +415,12 @@ export default function Page() {
                       type="text"
                       value={formData.fullName}
                       onChange={(e) => {
-                        setFormData((f) => ({ ...f, fullName: e.target.value }));
-                        if (errors.fullName) setErrors((e) => ({ ...e, fullName: "" }));
+                        setFormData((f) => ({
+                          ...f,
+                          fullName: e.target.value,
+                        }));
+                        if (errors.fullName)
+                          setErrors((e) => ({ ...e, fullName: "" }));
                       }}
                       placeholder="أحمد محمد"
                       className={`w-full rounded-lg border-2 px-4 py-3 text-base transition-all ${
@@ -392,7 +430,9 @@ export default function Page() {
                       } focus:outline-none`}
                     />
                     {errors.fullName && (
-                      <p className="text-red-600 text-sm mt-1">{errors.fullName}</p>
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.fullName}
+                      </p>
                     )}
                   </div>
 
@@ -406,7 +446,8 @@ export default function Page() {
                       value={formData.phone}
                       onChange={(e) => {
                         setFormData((f) => ({ ...f, phone: e.target.value }));
-                        if (errors.phone) setErrors((e) => ({ ...e, phone: "" }));
+                        if (errors.phone)
+                          setErrors((e) => ({ ...e, phone: "" }));
                       }}
                       placeholder="0555123456"
                       className={`w-full rounded-lg border-2 px-4 py-3 text-base transition-all ${
@@ -416,7 +457,9 @@ export default function Page() {
                       } focus:outline-none`}
                     />
                     {errors.phone && (
-                      <p className="text-red-600 text-sm mt-1">{errors.phone}</p>
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.phone}
+                      </p>
                     )}
                   </div>
 
@@ -429,8 +472,12 @@ export default function Page() {
                       type="text"
                       value={formData.wilayaNameAr}
                       onChange={(e) => {
-                        setFormData((f) => ({ ...f, wilayaNameAr: e.target.value }));
-                        if (errors.wilayaNameAr) setErrors((e) => ({ ...e, wilayaNameAr: "" }));
+                        setFormData((f) => ({
+                          ...f,
+                          wilayaNameAr: e.target.value,
+                        }));
+                        if (errors.wilayaNameAr)
+                          setErrors((e) => ({ ...e, wilayaNameAr: "" }));
                       }}
                       placeholder="مثال: الجزائر"
                       className={`w-full rounded-lg border-2 px-4 py-3 text-base transition-all ${
@@ -440,7 +487,9 @@ export default function Page() {
                       } focus:outline-none`}
                     />
                     {errors.wilayaNameAr && (
-                      <p className="text-red-600 text-sm mt-1">{errors.wilayaNameAr}</p>
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.wilayaNameAr}
+                      </p>
                     )}
                   </div>
 
@@ -453,8 +502,12 @@ export default function Page() {
                       type="text"
                       value={formData.baladiya}
                       onChange={(e) => {
-                        setFormData((f) => ({ ...f, baladiya: e.target.value }));
-                        if (errors.baladiya) setErrors((e) => ({ ...e, baladiya: "" }));
+                        setFormData((f) => ({
+                          ...f,
+                          baladiya: e.target.value,
+                        }));
+                        if (errors.baladiya)
+                          setErrors((e) => ({ ...e, baladiya: "" }));
                       }}
                       placeholder="مثال: باب الزوار"
                       className={`w-full rounded-lg border-2 px-4 py-3 text-base transition-all ${
@@ -464,21 +517,28 @@ export default function Page() {
                       } focus:outline-none`}
                     />
                     {errors.baladiya && (
-                      <p className="text-red-600 text-sm mt-1">{errors.baladiya}</p>
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.baladiya}
+                      </p>
                     )}
                   </div>
 
                   {/* Model Number Input - Required */}
                   <div>
                     <label className="block text-sm font-semibold mb-2 text-slate-800">
-                      أدخل رقم النموذج الموضح في الصورة <span className="text-red-500">*</span>
+                      أدخل رقم النموذج الموضح في الصورة{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
                       value={formData.modelNumber}
                       onChange={(e) => {
-                        setFormData((f) => ({ ...f, modelNumber: e.target.value }));
-                        if (errors.modelNumber) setErrors((e) => ({ ...e, modelNumber: "" }));
+                        setFormData((f) => ({
+                          ...f,
+                          modelNumber: e.target.value,
+                        }));
+                        if (errors.modelNumber)
+                          setErrors((e) => ({ ...e, modelNumber: "" }));
                       }}
                       placeholder={`${selectedWatchId} (مطلوب)`}
                       className={`w-full rounded-lg border-2 px-4 py-3 text-base transition-all ${
@@ -488,7 +548,9 @@ export default function Page() {
                       } focus:outline-none`}
                     />
                     {errors.modelNumber && (
-                      <p className="text-red-600 text-sm mt-1">{errors.modelNumber}</p>
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.modelNumber}
+                      </p>
                     )}
                     <p className="text-xs text-slate-500 mt-1">
                       يرجى إدخال رقم النموذج الموضح في الصورة أعلاه
@@ -499,7 +561,9 @@ export default function Page() {
 
               {/* Delivery Options - AFTER Form */}
               <div className="border-t border-slate-200 pt-6">
-                <h3 className="text-lg font-bold mb-4 text-slate-900">اختر طريقة التوصيل</h3>
+                <h3 className="text-lg font-bold mb-4 text-slate-900">
+                  اختر طريقة التوصيل
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <motion.button
                     onClick={() => setDeliveryOption("office")}
@@ -511,11 +575,15 @@ export default function Page() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Building2 className={`w-8 h-8 mb-2 ${deliveryOption === "office" ? "text-amber-600" : "text-slate-400"}`} />
+                    <Building2
+                      className={`w-8 h-8 mb-2 ${deliveryOption === "office" ? "text-amber-600" : "text-slate-400"}`}
+                    />
                     <h4 className="text-base font-bold mb-1 text-slate-900">
                       توصيل للمكتب (Yalidine)
                     </h4>
-                    <p className="text-xs text-slate-600 mb-2">تستلمها بنفسك من مكتب ياليدين في ولايتك.</p>
+                    <p className="text-xs text-slate-600 mb-2">
+                      تستلمها بنفسك من مكتب ياليدين في ولايتك.
+                    </p>
                     <p className="text-lg font-bold text-amber-600">
                       +{formatDZD(PRICING.DELIVERY_OFFICE)}
                     </p>
@@ -540,11 +608,15 @@ export default function Page() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Home className={`w-8 h-8 mb-2 ${deliveryOption === "home" ? "text-amber-600" : "text-slate-400"}`} />
+                    <Home
+                      className={`w-8 h-8 mb-2 ${deliveryOption === "home" ? "text-amber-600" : "text-slate-400"}`}
+                    />
                     <h4 className="text-base font-bold mb-1 text-slate-900">
                       توصيل للمنزل
                     </h4>
-                    <p className="text-xs text-slate-600 mb-2">يوصلها عامل التوصيل حتى باب دارك.</p>
+                    <p className="text-xs text-slate-600 mb-2">
+                      يوصلها عامل التوصيل حتى باب دارك.
+                    </p>
                     <p className="text-lg font-bold text-amber-600">
                       +{formatDZD(PRICING.DELIVERY_HOME)}
                     </p>
@@ -566,7 +638,9 @@ export default function Page() {
                 <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl text-white shadow-lg">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-bold">الإجمالي</span>
-                    <span className="text-2xl font-extrabold">{formatDZD(total)}</span>
+                    <span className="text-2xl font-extrabold">
+                      {formatDZD(total)}
+                    </span>
                   </div>
                 </div>
               )}

@@ -27,12 +27,20 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://example.com"),
   title: {
     default: "الهدية الفاخرة | اطلب ساعتك الآن مع توصيل سريع", // default root title
-    template: "%s | ساعات فاخرة في الجزائر" // used if child pages set a title
+    template: "%s | ساعات فاخرة في الجزائر", // used if child pages set a title
   },
   description:
     "أقوى عرض ساعات رجالية فاخرة في الجزائر – تصميم أنيق، جودة عالية، سعر ترويجي محدود + دفع عند الاستلام وتوصيل سريع لجميع الولايات.",
   keywords: [
-    "ساعات", "ساعات رجالية", "ساعة فاخرة", "شراء ساعة", "ساعة ذكية", "توصيل سريع", "الدفع عند الاستلام", "الجزائر", "عرض خاص"
+    "ساعات",
+    "ساعات رجالية",
+    "ساعة فاخرة",
+    "شراء ساعة",
+    "ساعة ذكية",
+    "توصيل سريع",
+    "الدفع عند الاستلام",
+    "الجزائر",
+    "عرض خاص",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -45,19 +53,19 @@ export const metadata: Metadata = {
       "اكتشف تشكيلة من 20 ساعة فاخرة بسعر ترويجي محدود – اطلب الآن والدفع عند الاستلام مع خدمة توصيل سريعة لكل الولايات.",
     images: [
       {
-        url: "/images/watches/1.jpg",
+        url: "/images/watches/1.webp",
         width: 800,
         height: 800,
-        alt: "عرض ساعات فاخرة"
-      }
-    ]
+        alt: "عرض ساعات فاخرة",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "ساعات فاخرة بعرض خاص في الجزائر",
     description:
       "20 موديل مميز + توصيل سريع + الدفع عند الاستلام. احجز الآن قبل انتهاء العرض!",
-    images: ["/images/watches/1.jpg"],
+    images: ["/images/watches/1.webp"],
   },
   robots: {
     index: true,
@@ -66,7 +74,7 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.ico" },
   other: {
     "theme-color": "#0f172a",
-  }
+  },
 };
 
 export default function RootLayout({
@@ -77,10 +85,14 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body
-  className={`${geistSans.variable} ${geistMono.variable} ${tajawal.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${tajawal.variable} antialiased`}
       >
         {/* Structured Data (JSON-LD) */}
-        <Script id="ld-json" type="application/ld+json" strategy="afterInteractive">{`
+        <Script
+          id="ld-json"
+          type="application/ld+json"
+          strategy="afterInteractive"
+        >{`
           {
             "@context": "https://schema.org",
             "@type": "WebSite",
@@ -104,22 +116,22 @@ export default function RootLayout({
           toastOptions={{
             duration: 4000,
             style: {
-              background: '#fff',
-              color: '#1f2937',
-              borderRadius: '12px',
-              padding: '16px',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+              background: "#fff",
+              color: "#1f2937",
+              borderRadius: "12px",
+              padding: "16px",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
             },
             success: {
               iconTheme: {
-                primary: '#10b981',
-                secondary: '#fff',
+                primary: "#10b981",
+                secondary: "#fff",
               },
             },
             error: {
               iconTheme: {
-                primary: '#ef4444',
-                secondary: '#fff',
+                primary: "#ef4444",
+                secondary: "#fff",
               },
             },
           }}
